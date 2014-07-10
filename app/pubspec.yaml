@@ -1,0 +1,6 @@
+name: eLingua
+version: 0.0.1
+author: Andreas Stocker
+description: A sample application
+dependencies:
+  angular: any
