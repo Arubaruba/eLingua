@@ -1,0 +1,16 @@
+<table>
+  <tr class="headers">
+    <th ng-repeat="field in cmp.fieldNames">{{field}}</th>
+  </tr>
+  <tr ng-repeat="document in cmp.documents">
+    <td ng-repeat="field in cmp.fieldNames" ng-switch="document['doc'].containsKey(field)">
+      <span ng-switch-when="true" >
+        {{document['doc'][field]}}
+      </span>
+      <span ng-switch-when="false">_</span>
+    </td>
+    <td>
+      <button>{{'Edit'|i}}</button>
+    </td>
+  </tr>
+</table>
