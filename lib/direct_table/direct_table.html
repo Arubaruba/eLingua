@@ -1,16 +1,38 @@
+
+<form ng-repeat="document in cmp.documents" ng-submit="cmp.editDocument(document)" id="{{document['doc']['_id']}}"></form>
+
 <table>
-  <tr class="headers">
-    <th ng-repeat="field in cmp.fieldNames">{{field}}</th>
+
+  <tr>
+    <th ng-repeat="field in cmp.fieldNames">{{field|i}}</th>
+    <td ng-if="cmp.readOnly == false" class="button"></td>
   </tr>
+
+  <tr ng-if="cmp.readOnly == false">
+    <td class="normal" ng-repeat="field in cmp.fieldNames">
+      <input  placeholder="{{field|i}}" type="text" ng-model="cmp.additionalDocument['doc'][field]"/>
+    </td>
+    <td class="button" ng-switch="cmp.additionalDocument['processing'] == true">
+      <button ng-switch-default class="blue" ng-click="cmp.addDocument()">＋</button>
+      <img ng-switch-when="true" src="images/loading.gif" alt="..."/>
+    </td>
+   </tr>
+
   <tr ng-repeat="document in cmp.documents">
-    <td ng-repeat="field in cmp.fieldNames" ng-switch="document['doc'].containsKey(field)">
-      <span ng-switch-when="true" >
-        {{document['doc'][field]}}
-      </span>
-      <span ng-switch-when="false">_</span>
-    </td>
-    <td>
-      <button>{{'Edit'|i}}</button>
-    </td>
+      <td class="normal" ng-repeat="field in cmp.fieldNames" ng-switch="document['edit'] == true">
+        <span ng-switch-default ng-switch="document['doc'][field] != null">
+          <span ng-switch-when="true">{{document['doc'][field]}}</span>
+          <span ng-switch-default>&nbsp;</span>
+        </span>
+        <input form="{{document['doc']['_id']}}" ng-switch-when="true" placeholder="{{field|i}}" type="text" ng-model="document['doc'][field]"/>
+      </td>
+      <td ng-if="cmp.readOnly == false" class="button" ng-switch="document['edit'] == true">
+        <button class="light-blue" ng-switch-default ng-click="document['edit'] = true; cmp.backupDocument(document)">✎</button>
+        <span ng-switch-when="true"  ng-switch="document['processing'] == true">
+          <button ng-switch-default class="green" type="submit" form="{{document['doc']['_id']}}">✔</button>
+          <button class="red" ng-click="document['edit'] = false; cmp.restoreDocument(document)">✖</button>
+          <img ng-switch-when="true" src="images/loading.gif" alt="..."/>
+        </span>
+      </td>
   </tr>
 </table>
