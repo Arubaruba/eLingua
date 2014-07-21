@@ -1,10 +1,13 @@
-div.website-name {
-  font-size: 50px;
-  font-weight: bold;
-  margin: 25vh 0 30px 0;
+form.fullscreen a {
+  display: block;
+  margin: 20px;
+  font-size: 20px;
+  text-decoration: underline;
+  color: #cce7ff;
+  cursor: pointer;
 }
 
-form.sign-in button {
+form.fullscreen button, .upper_bar button {
   border: none;
   border-radius: 3px;
   font-size: 20px;
@@ -14,13 +17,9 @@ form.sign-in button {
   color: ghostwhite;
   font-weight: bold;
 }
-
-div.fixed-bottom-bar > a {
-  text-decoration: underline;
-  color: ghostwhite;
-  margin: 0 10px;
-  float: left;
-}
 div.fixed-bottom-bar span.site-by > a {
   color: inherit;
+}
+.upper_bar button {
+  float: right;
 }

@@ -1,3 +1,3 @@
 abstract class Config {
-  static final String couchDb = 'http://localhost:5984/';
+  static final String couchDb = '/db/';
 }
