@@ -1,0 +1,26 @@
+div.website-name {
+  font-size: 50px;
+  font-weight: bold;
+  margin: 25vh 0 30px 0;
+}
+
+form.sign-in button {
+  border: none;
+  border-radius: 3px;
+  font-size: 20px;
+  padding: 10px;
+  background: crimson;
+  font-family: inherit;
+  color: ghostwhite;
+  font-weight: bold;
+}
+
+div.fixed-bottom-bar > a {
+  text-decoration: underline;
+  color: ghostwhite;
+  margin: 0 10px;
+  float: left;
+}
+div.fixed-bottom-bar span.site-by > a {
+  color: inherit;
+}

@@ -1,0 +1,10 @@
+div.fixed-bottom-bar span.copyright {
+  color: darkgrey;
+  margin: 0 10px;
+  font-size: 13px;
+}
+div.fixed-bottom-bar span.site-by {
+  float: right;
+  margin-right: 10px;
+  color: gold;
+}

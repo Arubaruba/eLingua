@@ -2,4 +2,38 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
   color: #232323;
+  background: dodgerblue;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+form.sign-in {}
+
+form.sign-in input{
+  color: inherit;
+  width: 250px;
+  border: none;
+  border-radius: 3px;
+  font-size: 20px;
+  padding: 10px;
+  background: ghostwhite;
+ }
+form.sign-in .error {
+  display: inline-block;
+  font-size: 25px;
+  color: crimson;
+  font-weight: bold;
+  margin: 40px 0 60px 0;
+  padding: 15px;
+  background: #80c1ff;
+  border-radius: 2px;
+}
+
+div.fixed-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  padding: 10px 0;
+  background: crimson;
+  width: 100%;
 }
