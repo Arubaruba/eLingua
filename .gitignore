@@ -9,8 +9,8 @@ packages/
 *.js.deps
 *.js.map
 
-# Confidential
-passwords.json
+# Secret
+auth.js
 
 # Include when developing application packages.
 pubspec.lock
