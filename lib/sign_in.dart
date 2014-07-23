@@ -1,9 +1,4 @@
-library sign_in;
-
-import 'package:angular/angular.dart';
-import 'package:elingua/config.dart';
-import 'package:elingua/i18n/i18n.dart';
-import 'dart:convert';
+part of elingua;
 
 @Controller(selector: '[sign-in]', publishAs: 'ctrl')
 class SignIn {

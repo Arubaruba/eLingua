@@ -5,7 +5,7 @@ class PasswordReset {
   Http http;
   I18n i18n;
   Router router;
-  String email, error;
+  String email, error = 'a';
   PasswordReset(this.http, this.i18n, this.router);
 
   sendResetLink() {
