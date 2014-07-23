@@ -1,0 +1,25 @@
+form.fullscreen a {
+  display: block;
+  margin: 20px;
+  font-size: 20px;
+  text-decoration: underline;
+  color: #cce7ff;
+  cursor: pointer;
+}
+
+form.fullscreen button, .upper_bar button {
+  border: none;
+  border-radius: 3px;
+  font-size: 20px;
+  padding: 10px;
+  background: crimson;
+  font-family: inherit;
+  color: ghostwhite;
+  font-weight: bold;
+}
+div.fixed-bottom-bar span.site-by > a {
+  color: inherit;
+}
+.upper_bar button {
+  float: right;
+}

@@ -1,0 +1,8 @@
+<form sign-in class="fullscreen" ng-submit="ctrl.authenticate()">
+  <div class="website-name">{{'eLingua Scheduler'|i}}</div>
+  <input ng-model="ctrl.email" type="email" placeholder="{{'Email'|i}}"/>
+  <input ng-model="ctrl.password" type="password" placeholder="{{'Password'|i}}"/>
+  <button type="submit">{{'Sign In'|i}}</button><br>
+  <a href="/password_reset">{{'Reset my Password'|i}}</a>
+  <span ng-if="ctrl.error != null" class="error">{{ctrl.error}}</span>
+</form>

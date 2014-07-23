@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eLingua</title>
+  <link rel="stylesheet" href="css/master.css"/>
+  <script type="application/dart" src="main.dart"></script>
+  <script type="text/javascript" src="packages/browser/dart.js"></script>
+</head>
+<body>
+  <div id="loaded-site" ng-cloak>
+    <ng-view></ng-view>
+    <div class="fixed-bottom-bar">
+      <span class="copyright">{{'Copyright 2014 eLingua'|i}}</span>
+      <span title="{{'Email'|i}}: andreas@stockers.org" class="site-by">{{'Site by'|i}} <a href="mailto:andreas@stockers.org">Andreas Stocker</a></span>
+    </div>
+  </div>
+  <div id="loading-site" ng-cloak>...</div>
+</body>
+</html>

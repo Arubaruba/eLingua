@@ -1,0 +1,23 @@
+form.fullscreen .title {
+  font-size: 40px;
+  font-weight: bold;
+  margin: 25vh 0 30px 0;
+}
+
+form.fullscreen div.website-name {
+  font-size: 50px;
+  font-weight: bold;
+  margin: 25vh 0 30px 0;
+}
+
+div.fixed-bottom-bar span.copyright {
+  color: darkgrey;
+  margin: 0 10px;
+  font-size: 13px;
+}
+
+div.fixed-bottom-bar span.site-by {
+  float: right;
+  margin-right: 10px;
+  color: gold;
+}
