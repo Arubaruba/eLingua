@@ -1,16 +1,16 @@
 var http = require('http');
 var nodemailer = require('nodemailer');
+var sendmailTransport = require('nodemailer-sendmail-transport');
 var crypto = require('crypto');
 var fs = require('fs');
 
-var users = require('felix-couchdb').createClient(5987, auth.couchDb.username, auth.couchDb.password).db('_users');
+var auth = require('./auth');
+var config = require('./config');
 
-var auth = require('./auth.js');
-var config = require('./config.js');
+var users = require('felix-couchdb').createClient(5984, 'localhost', auth.couchDb.username, auth.couchDb.password).db('_users');
 
-var transport = nodemailer.createTransport('SMTP', {
-  host: 'localhost'
-});
+
+var transport = nodemailer.createTransport(sendmailTransport());
 
 function sendMail(recipient, subject, content, callback) {
   transport.sendMail({
@@ -21,23 +21,21 @@ function sendMail(recipient, subject, content, callback) {
   }, callback);
 }
 
-var emailContent = fs.readFileSync('./email_content.html');
+var emailContent = fs.readFileSync(__dirname + '/email_content.html', {encoding: 'utf8'});
 
 http.createServer(function (request, response) {
-  if (request.type != 'POST') {
+  if (request.method != 'POST') {
 
-    response.code = 400;
-    response.end('Expected POST request type, got: ' + request.type);
+    response.statusCode = 400;
+    response.end('Expected POST request type, got: ' + request.method);
+
   } else {
 
     var data = '';
 
-    request.on('data', function(err, result) {
-      if (err) {
-        response.code = 400;
-        response.end('Unknown error occurred while receiving data');
-      } else if (data.length > 1000) {
-        response.code = 400;
+    request.on('data', function(result) {
+      if (data.length > 1000) {
+        response.statusCode = 400;
         response.end('POST request too large');
       } else {
         data += result;
@@ -47,24 +45,24 @@ http.createServer(function (request, response) {
     request.on('end', function() {
       var content = JSON.parse(data);
       if (!content) {
-        response.code = 400;
+        response.statusCode = 400;
         response.end('Invalid JSON');
       } else {
-        users.view('views', 'users_by_email', {key: content['email']}, function(err, result){
-          if (err) {
-            response.code = 500;
+        users.view('generic', 'users_by_name', {key: content['email']}, function(err, result){
+          if (err || !result) {
+            response.statusCode = 500;
             response.end('Database Error - Unable to search users');
-          } else if (!result['rows'].length < 1) {
-            response.code = 404;
+          } else if (result['rows'].length < 1) {
+            response.statusCode = 404;
             response.end('Unknown email address');
           } else {
-            var document = result['rows']['value'];
+            var document = result['rows'][0]['value'];
             if (!document['password_reset_tokens']) {
               document['password_reset_tokens'] = [];
             }
             crypto.randomBytes(64, function(err, bytes) {
               if(err) {
-                response.code = 500;
+                response.statusCode = 500;
                 response.end('Unable to Generate Random Token');
               } else {
                 var token = bytes.toString('hex');
@@ -72,17 +70,17 @@ http.createServer(function (request, response) {
                   token: token,
                   created: Date.now()
                 });
-                document.save(function(err) {
+                users.saveDoc(document['_id'], document, function(err) {
                   if (err) {
-                    response.code = 500;
+                    response.statusCode = 500;
                     response.end('Unable to save modified User Document');
                   } else {
-                    sendMail(document['name'], 'Password Reset Link', emailContent.replaceAll('{link}', config.resetUrl + token), function(err){
+                    sendMail(document['name'], 'Password Reset Link', emailContent.replace(/{link}/g, config.resetUrl + token), function(err){
                       if (err) {
-                        response.code = 500;
+                        response.statusCode = 500;
                         response.end('Unable to send Email');
                       } else {
-                        response.code = 200;
+                        response.statusCode = 200;
                         response.end('Success! Token created and Email sent');
                       }
                     });
@@ -95,4 +93,4 @@ http.createServer(function (request, response) {
       }
     });
   }
-}).listen(8081);
+}).listen(config.port);
